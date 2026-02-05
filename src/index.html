@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="calendario" style="-webkit-app-region: drag;">
+    <h1>Widget Google Calendar</h1>
+</body>
+<script>
+    document.onreadystatechange = calendario();
+
+    function calendario() {
+        console.log("Cargando calendario...");
+        window.location.href = 'http://calendar.google.com/calendar/';
+    }
+</script>
+</html>

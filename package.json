@@ -1,0 +1,29 @@
+{
+  "name": "widget-g-calendar",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "server": "nodemon server.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --windows",
+    "watch-css": "npx tailwindcss -i ./input.css -o public/style/styles.css --watch",
+    "build-css": "npx tailwindcss -i ./input.css -o public/style/styles.css"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "fs": "^0.0.1-security",
+    "nodemon": "^3.1.11",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "electron": "^40.1.0"
+  }
+}
