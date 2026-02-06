@@ -19,13 +19,13 @@ function createWindow() {
 }
 //app.on("ready", mainWindow);
 
-function widget_ventana() {
-    const win = new BrowserWindow({
+function widget_ventana(trans=false, fram=true) {
+    win = new BrowserWindow({
         width: 600,
         height: 600,
         type: 'toolbar', // Depende del SO
-        transparent: true,
-        frame: false,
+        transparent: trans,
+        frame: fram,
         skipTaskbar: true, // No aparece en la barra de tareas
         resizable: true,
         webPreferences: {
@@ -37,7 +37,39 @@ function widget_ventana() {
         win = null;
         app.quit();
     });
-
+    const MenuTemplate = [
+        {
+            label: 'Archivo',
+            submenu: [
+                { label: 'Recargar', role: 'reload' },
+                { type: 'separator' },
+                { label: 'Salir', click: () => { app.quit(); } }
+            ]
+        },
+        {
+            label: 'Opciones',
+            submenu: [
+                { label: 'Ver en pantalla completa', role: 'togglefullscreen' },
+                { label: 'Colocar con pin', click: () => {win=widget_ventana(true, true);console.log(win.frame);} },
+                { label: 'Quitar pin', click: () => { win=widget_ventana(false, true);console.log(win.frame);} },
+                { label: 'Siempre visible', click: () => { win.setAlwaysOnTop(true); win.reload(); } },
+                { label: 'No siempre visible', click: () => { win.setAlwaysOnTop(false); win.reload(); } },
+                { type: 'separator' },
+                { label: 'Herramientas de desarrollo (Precaución)', role: 'toggledevtools' }
+            ]
+        },
+        {
+            label: 'Ayuda',
+            submenu: [
+                { label: 'Acerca de', click: ()=> {const aboutWin = new BrowserWindow({ width: 400, height: 300, modal: true, parent: win, resizable:false,title:"Acerca de CalendarWidget" , webPreferences: { nodeIntegration: true } });aboutWin.setMenu(null);  aboutWin.loadFile(path.join(__dirname, 'src', 'about.html')); } },
+                { type: 'separator' },
+                { label: 'Soporte Google Calendar', click: async () => { await shell.openExternal('https://google.com'); } }
+            ]
+        }
+    ];
+   
+    const mainMenu = Menu.buildFromTemplate(MenuTemplate);
+    Menu.setApplicationMenu(mainMenu);
     const iconPath = path.join(__dirname, 'public', 'img', 'jupiter.png');
     const icon = nativeImage.createFromPath(iconPath);
     const tray = new Tray(icon); 
