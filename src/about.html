@@ -4,18 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acerca de CalendarWidget</title>
-    <link rel="stylesheet" href="../public/style/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1f1f1f; /* Gris oscuro característico de Google */
+        }
+        .google-card {
+            background-color: #2d2e30;
+            border: 1px solid #3c4043;
+        }
+    </style>
 </head>
-<body>
-    <h1 class="text-3xl font-bold underline text-center items-center">CalendarWidget</h1>
-    <p class="text-m font-bold text-center items-center text-red-500">Versión preliminar demo</p>
-    <h2>Desarrollado por Ing Neil Otniel Moreno Rivera</h2>
-    <p>Desarrollado para uso personal a manera de widget y descarga gratuita uwu</p>
+<body class="text-gray-300 flex items-center justify-center min-h-screen p-4">
+
+    <div class="google-card max-w-sm w-full rounded-2xl p-8 shadow-lg">
+        <header class="text-center mb-8">
+            <h1 class="text-2xl font-medium text-white tracking-tight mb-1">
+                CalendarWidget
+            </h1>
+            <span class="text-xs font-medium px-2 py-0.5 rounded border border-red-500/50 text-red-400">
+                DEMO PRELIMINAR
+            </span>
+        </header>
+
+        <main class="space-y-6 text-sm">
+            <section>
+                <h2 class="text-gray-500 font-medium uppercase text-[11px] tracking-widest mb-2">Desarrollador</h2>
+                <p class="text-gray-200 text-base">Ing. Neil Otniel Moreno Rivera</p>
+                <p class="text-gray-400 mt-1 font-light italic text-xs">Uso personal y distribución gratuita.</p>
+            </section>
+
+            <div class="h-[1px] bg-gray-700 w-full"></div>
+
+            <section class="space-y-3">
+                <h2 class="text-gray-500 font-medium uppercase text-[11px] tracking-widest mb-2">Contacto</h2>
+                
+                <div class="flex items-center gap-3">
+                    <span class="text-gray-500">Email:</span>
+                    <a href="mailto:neilotniel@gmail.com" class="text-blue-400 hover:underline">neilotniel@gmail.com</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <span class="text-gray-500">GitHub:</span>
+                    <a href="https://github.com/VagrantTrack149" target="_blank" class="text-blue-400 hover:underline">VagrantTrack149</a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="mt-10 pt-4 text-center">
+            <p class="text-[10px] text-gray-600 uppercase tracking-tighter">
+                &copy; 2026 • Hecho con Electron
+            </p>
+        </footer>
+    </div>
+
 </body>
-<footer>
-    <p>Contacto: <lu>
-        <li>Correo: neilotniel@gmail.com</li>
-        <li>GitHub: <a href="https://github.com/VagrantTrack149">VagrantTrack149</a></li>
-    </lu></p>
-</footer>
 </html>
