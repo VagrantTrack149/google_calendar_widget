@@ -25,6 +25,8 @@ function widget_ventana() {
     win = new BrowserWindow({
         width: 600,
         height: 600,
+        icon: path.join(__dirname, 'public', 'img', 'jupiter.ico'),
+        title: 'CalendarWidget',
         type: 'toolbar', // Depende del SO
         transparent: false,
         frame: true,
