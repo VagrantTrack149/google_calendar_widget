@@ -99,6 +99,7 @@ function widget_ventana() {
     const mainMenu = Menu.buildFromTemplate(MenuTemplate);
     Menu.setApplicationMenu(mainMenu);
     const iconPath = path.join(__dirname, 'public', 'img', 'jupiter.png');
+    console.log(iconPath);
     const icon = nativeImage.createFromPath(iconPath);
     const tray = new Tray(icon); 
     if (tray) {
