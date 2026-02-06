@@ -6,6 +6,14 @@
     <title>HOLA</title>
 </head>
 <body>
-    PRASFKNDAKSLGNLASK
+    <h2>Desarrollado por Ing Neil Otniel Moreno Rivera</h2>
+    <p>Desarrollado para uso personal a manera de widget y descarga gratuita uwu</p>
+    <p onclick="ventana()" >Contacto: LinkedIn</p>
+    <script>
+        function ventana() {
+            var shell = require('electron').shell;
+            shell.openExternal('https://www.linkedin.com/in/neil-otniel-moreno-rivera-634b9821b/');
+        }
+    </script>
 </body>
 </html>

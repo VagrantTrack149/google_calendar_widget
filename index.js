@@ -1,8 +1,10 @@
 const {app, BrowserWindow, ipcMain, ipcRenderer,dialog, shell, Menu, MenuItem, Tray, nativeImage, Notification} = require("electron");
 const path = require("path");
 const url = require("url");
+const fs = require('fs');
 
 let mainWindow = null;
+let win = null;
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
@@ -19,13 +21,13 @@ function createWindow() {
 }
 //app.on("ready", mainWindow);
 
-function widget_ventana(trans=false, fram=true) {
+function widget_ventana() {
     win = new BrowserWindow({
         width: 600,
         height: 600,
         type: 'toolbar', // Depende del SO
-        transparent: trans,
-        frame: fram,
+        transparent: false,
+        frame: true,
         skipTaskbar: true, // No aparece en la barra de tareas
         resizable: true,
         webPreferences: {
@@ -37,11 +39,37 @@ function widget_ventana(trans=false, fram=true) {
         win = null;
         app.quit();
     });
+
+    function applyConfig(cfg) {
+        if (!win || !cfg) return;
+        if (typeof cfg.alwaysOnTop === 'boolean') win.setAlwaysOnTop(cfg.alwaysOnTop);
+        if (typeof cfg.movable === 'boolean' && win.setMovable) win.setMovable(cfg.movable);
+        if (typeof cfg.resizable === 'boolean') win.setResizable(cfg.resizable);
+        if (typeof cfg.width === 'number' && typeof cfg.height === 'number') win.setSize(cfg.width, cfg.height);
+        if (typeof cfg.x === 'number' && typeof cfg.y === 'number') win.setPosition(cfg.x, cfg.y);
+        console.log('Applied config', cfg);
+    }
+
+    function loadConfig() {
+        const cfgPath = path.join(__dirname, 'widget-config.json');
+        try {
+            if (fs.existsSync(cfgPath)) {
+                const raw = fs.readFileSync(cfgPath, 'utf8');
+                const cfg = JSON.parse(raw);
+                applyConfig(cfg);
+            } else {
+                console.log('No config file found at', cfgPath);
+            }
+        } catch (err) {
+            console.error('Failed to load config:', err);
+        }
+    }
     const MenuTemplate = [
         {
             label: 'Archivo',
             submenu: [
                 { label: 'Recargar', role: 'reload' },
+                { label: 'Recargar configuración', click: () => { loadConfig(); } },
                 { type: 'separator' },
                 { label: 'Salir', click: () => { app.quit(); } }
             ]
@@ -50,10 +78,10 @@ function widget_ventana(trans=false, fram=true) {
             label: 'Opciones',
             submenu: [
                 { label: 'Ver en pantalla completa', role: 'togglefullscreen' },
-                { label: 'Colocar con pin', click: () => {win=widget_ventana(true, true);console.log(win.frame);} },
-                { label: 'Quitar pin', click: () => { win=widget_ventana(false, true);console.log(win.frame);} },
-                { label: 'Siempre visible', click: () => { win.setAlwaysOnTop(true); win.reload(); } },
-                { label: 'No siempre visible', click: () => { win.setAlwaysOnTop(false); win.reload(); } },
+                { label: 'Colocar con pin', click: () => { if (win) {  win.setMovable(false); win.setResizable(false); console.log('Pin'); } } },
+                { label: 'Quitar pin', click: () => { if (win) {  win.setMovable(true); win.setResizable(true); console.log('No pin'); } } },
+                { label: 'Siempre visible', click: () => { if (win) { win.setAlwaysOnTop(true); console.log('Top'); } } },
+                { label: 'No siempre visible', click: () => { if (win) { win.setAlwaysOnTop(false); console.log('No top'); } } },
                 { type: 'separator' },
                 { label: 'Herramientas de desarrollo (Precaución)', role: 'toggledevtools' }
             ]
